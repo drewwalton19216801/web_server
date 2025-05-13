@@ -4,11 +4,11 @@ use axum::{
     http::StatusCode,
 };
 use std::sync::Arc;
-use chrono::{Local, Utc};
+use chrono::Utc;
 use uuid::Uuid;
 
 use crate::{
-    models::{TimeResponse, BlogPost, SearchQuery, Comment, CommentRequest},
+    models::{BlogPost, SearchQuery, Comment, CommentRequest},
     state::AppState,
     data::get_blog_posts,
 };
@@ -25,13 +25,6 @@ pub async fn about_handler(
         .expect("Failed to render template");
     
     Html(rendered)
-}
-
-// Handler for the time API
-pub async fn time_handler() -> Json<TimeResponse> {
-    Json(TimeResponse {
-        current_time: Local::now().format("%Y-%m-%d %H:%M:%S").to_string(),
-    })
 }
 
 // Handler for the blog page

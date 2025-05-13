@@ -1,12 +1,7 @@
 use serde::{Serialize, Deserialize};
 use chrono::{DateTime, Utc};
 
-#[derive(Serialize)]
-pub struct TimeResponse {
-    pub current_time: String,
-}
-
-#[derive(Serialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct BlogPost {
     pub id: String,
     pub title: String,

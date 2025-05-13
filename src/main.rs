@@ -36,7 +36,6 @@ async fn main() {
         .route("/about", get(about_handler))
         .route("/blog/{id}", get(post_handler))
         .route("/blog/tag/{tag}", get(tag_handler))
-        .route("/api/time", get(time_handler))
         .route("/api/posts", get(posts_handler))
         .route("/api/search", get(search_handler))
         .route("/api/posts/{id}/comments", get(get_comments_handler))
