@@ -30,6 +30,11 @@
                         <span class="post-author">By ${post.author}</span>
                     </div>
                     <p>${post.excerpt}</p>
+                    <div class="post-tags">
+                        ${post.tags.map(tag => `
+                            <span class="tag">${tag}</span>
+                        `).join('')}
+                    </div>
                     <a href="#" class="read-more">Read More</a>
                 </article>
             `).join('');

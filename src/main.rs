@@ -27,6 +27,7 @@ struct BlogPost {
     date: String,
     author: String,
     excerpt: String,
+    tags: Vec<String>,
 }
 
 #[tokio::main]
@@ -112,18 +113,21 @@ async fn posts_handler() -> Json<Vec<BlogPost>> {
             date: "2024-03-20".to_string(),
             author: "John Doe".to_string(),
             excerpt: "Learn the basics of Rust programming language and why it's becoming increasingly popular for systems programming.".to_string(),
+            tags: vec!["rust".to_string(), "beginners".to_string(), "programming".to_string()],
         },
         BlogPost {
             title: "Building Web Applications with Axum".to_string(),
             date: "2024-03-19".to_string(),
             author: "Jane Smith".to_string(),
             excerpt: "A comprehensive guide to building modern web applications using the Axum framework in Rust.".to_string(),
+            tags: vec!["rust".to_string(), "axum".to_string(), "web-development".to_string()],
         },
         BlogPost {
             title: "Async Programming in Rust".to_string(),
             date: "2024-03-18".to_string(),
             author: "Mike Johnson".to_string(),
             excerpt: "Understanding async/await and how to write efficient asynchronous code in Rust.".to_string(),
+            tags: vec!["rust".to_string(), "async".to_string(), "performance".to_string()],
         },
     ];
     
