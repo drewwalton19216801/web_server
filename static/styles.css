@@ -270,6 +270,74 @@ li::before {
     color: var(--bg-color);
 }
 
+/* Individual post styles */
+.blog-post-full {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.post-header {
+    margin-bottom: 2rem;
+}
+
+.post-content {
+    line-height: 1.8;
+}
+
+.post-content h2 {
+    font-size: 1.75rem;
+    margin: 2rem 0 1rem;
+    color: var(--text-color);
+    background: none;
+    -webkit-text-fill-color: initial;
+}
+
+.post-content p {
+    margin-bottom: 1.5rem;
+}
+
+.post-content ul, .post-content ol {
+    margin: 1rem 0 1.5rem;
+    padding-left: 2rem;
+}
+
+.post-content li {
+    margin-bottom: 0.5rem;
+}
+
+.post-content pre {
+    background: var(--nav-bg);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+}
+
+.post-content code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9em;
+}
+
+.post-footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.back-to-blog {
+    display: inline-flex;
+    align-items: center;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.back-to-blog:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+
 @media (max-width: 640px) {
     .nav-container {
         flex-direction: column;
