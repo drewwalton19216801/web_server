@@ -2,14 +2,14 @@ use axum::{
     routing::get,
     Router,
     response::{Html, Json, IntoResponse},
-    extract::{Extension, Path},
+    extract::{Extension, Path, Query},
     http::StatusCode,
 };
 use std::sync::Arc;
 use tera::Tera;
 use tower_http::services::ServeDir;
 use chrono::Local;
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 
 // Shared state for our application
 struct AppState {
@@ -30,6 +30,13 @@ struct BlogPost {
     excerpt: String,
     content: String,
     tags: Vec<String>,
+}
+
+#[derive(Deserialize)]
+struct SearchQuery {
+    q: String,
+    #[serde(default, rename = "in")]
+    search_in: String,
 }
 
 // Store blog posts in memory (in a real app, this would be a database)
@@ -182,6 +189,7 @@ async fn main() {
         .route("/blog/{id}", get(post_handler))
         .route("/api/time", get(time_handler))
         .route("/api/posts", get(posts_handler))
+        .route("/api/search", get(search_handler))
         .nest_service("/static", ServeDir::new("static"))
         .fallback(handle_404)
         .layer(Extension(state));
@@ -265,6 +273,39 @@ async fn post_handler(
 // Handler for the posts API
 async fn posts_handler() -> Json<Vec<BlogPost>> {
     Json(get_blog_posts())
+}
+
+// Handler for the search API
+async fn search_handler(Query(params): Query<SearchQuery>) -> Json<Vec<BlogPost>> {
+    let query = params.q.to_lowercase();
+    let search_in: Vec<&str> = params.search_in.split(',').collect();
+    
+    let results = get_blog_posts()
+        .into_iter()
+        .filter(|post| {
+            if query.is_empty() {
+                return false;
+            }
+
+            let mut matches = false;
+            
+            if search_in.contains(&"title") {
+                matches |= post.title.to_lowercase().contains(&query);
+            }
+            
+            if search_in.contains(&"content") {
+                matches |= post.content.to_lowercase().contains(&query);
+            }
+            
+            if search_in.contains(&"tags") {
+                matches |= post.tags.iter().any(|tag| tag.to_lowercase().contains(&query));
+            }
+            
+            matches
+        })
+        .collect();
+    
+    Json(results)
 }
 
 // Handler for 404 errors

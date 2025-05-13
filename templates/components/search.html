@@ -1,0 +1,80 @@
+<div class="search-container">
+    <form id="search-form" class="search-form">
+        <div class="search-input-group">
+            <input type="text" id="search-input" placeholder="Search posts..." class="search-input">
+            <button type="submit" class="search-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </button>
+        </div>
+        <div class="search-filters">
+            <label class="search-filter">
+                <input type="checkbox" name="search-in" value="title" checked> Title
+            </label>
+            <label class="search-filter">
+                <input type="checkbox" name="search-in" value="content" checked> Content
+            </label>
+            <label class="search-filter">
+                <input type="checkbox" name="search-in" value="tags" checked> Tags
+            </label>
+        </div>
+    </form>
+    <div id="search-results" class="search-results"></div>
+</div>
+
+<script>
+    const searchForm = document.getElementById('search-form');
+    const searchInput = document.getElementById('search-input');
+    const searchResults = document.getElementById('search-results');
+    let searchTimeout;
+
+    searchForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        performSearch();
+    });
+
+    searchInput.addEventListener('input', () => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(performSearch, 300);
+    });
+
+    async function performSearch() {
+        const query = searchInput.value.trim();
+        if (query.length < 2) {
+            searchResults.innerHTML = '';
+            return;
+        }
+
+        const searchIn = Array.from(document.querySelectorAll('input[name="search-in"]:checked'))
+            .map(input => input.value);
+
+        try {
+            const response = await fetch(`/api/search?q=${encodeURIComponent(query)}&in=${searchIn.join(',')}`);
+            const results = await response.json();
+            
+            if (results.length === 0) {
+                searchResults.innerHTML = '<p class="no-results">No posts found matching your search.</p>';
+                return;
+            }
+
+            searchResults.innerHTML = results.map(post => `
+                <article class="search-result">
+                    <h3><a href="/blog/${post.id}">${post.title}</a></h3>
+                    <div class="result-meta">
+                        <span class="result-date">${post.date}</span>
+                        <span class="result-author">By ${post.author}</span>
+                    </div>
+                    <p class="result-excerpt">${post.excerpt}</p>
+                    <div class="result-tags">
+                        ${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                </article>
+            `).join('');
+        } catch (error) {
+            console.error('Error performing search:', error);
+            searchResults.innerHTML = '<p class="search-error">Error performing search. Please try again.</p>';
+        }
+    }
+</script> 
