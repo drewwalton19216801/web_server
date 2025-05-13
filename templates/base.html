@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}My Website{% endblock title %}</title>
     <link rel="stylesheet" href="/static/styles.css">
+    <script>
+        // Fetch and display render time for developers
+        fetch('/api/time')
+            .then(response => response.json())
+            .then(time => {
+                const renderTime = document.getElementById('render-time');
+                if (renderTime) {
+                    renderTime.textContent = `Page rendered at: ${time}`;
+                }
+            })
+            .catch(console.error);
+    </script>
 </head>
 <body>
     <nav>
@@ -22,5 +34,8 @@
             {% block content %}{% endblock content %}
         </div>
     </main>
+
+    <!-- Developer info - only visible when inspecting -->
+    <div id="render-time" style="display: none;" aria-hidden="true"></div>
 </body>
 </html> 

@@ -169,4 +169,9 @@ pub async fn add_comment_handler(
     post_comments.push(comment.clone());
 
     (StatusCode::CREATED, Json(comment)).into_response()
+}
+
+// Handler for the time API
+pub async fn time_handler() -> Json<String> {
+    Json(Utc::now().to_rfc3339())
 } 
