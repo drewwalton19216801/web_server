@@ -450,12 +450,20 @@ li::before {
     border-radius: 0.5rem;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-md);
-    z-index: 9;
+    z-index: 1000;
     max-height: 80vh;
     overflow-y: auto;
     backdrop-filter: blur(8px);
     background-color: var(--nav-blur-bg);
     animation: slideDown 0.2s ease-out;
+    transform-origin: top center;
+    will-change: transform, opacity;
+    width: 100%;
+}
+
+/* Remove the wrapper since we're using absolute positioning */
+.search-results-wrapper {
+    display: none;
 }
 
 .search-result {
@@ -489,33 +497,16 @@ li::before {
     color: var(--primary-color);
 }
 
-.result-meta {
-    display: flex;
-    gap: 1rem;
-    color: var(--text-light);
-    font-size: 0.875rem;
-    margin-bottom: 0.75rem;
-}
-
 .result-excerpt {
     color: var(--text-light);
-    margin-bottom: 1rem;
+    margin-bottom: 0;
     line-height: 1.6;
 }
 
+/* Remove styles for elements we no longer want to display */
+.result-meta,
 .result-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-}
-
-.no-results, .search-error {
-    text-align: center;
-    color: var(--text-light);
-    padding: 2rem;
-    background: var(--card-bg);
-    border-radius: 0.5rem;
-    border: 1px solid var(--border-color);
+    display: none;
 }
 
 /* Add a subtle animation for the search results */
