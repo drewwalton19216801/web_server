@@ -21,6 +21,14 @@ struct TimeResponse {
     current_time: String,
 }
 
+#[derive(Serialize)]
+struct BlogPost {
+    title: String,
+    date: String,
+    author: String,
+    excerpt: String,
+}
+
 #[tokio::main]
 async fn main() {
     // Initialize Tera templates
@@ -33,7 +41,9 @@ async fn main() {
     let app = Router::new()
         .route("/", get(home_handler))
         .route("/about", get(about_handler))
+        .route("/blog", get(blog_handler))
         .route("/api/time", get(time_handler))
+        .route("/api/posts", get(posts_handler))
         .nest_service("/static", ServeDir::new("static"))
         .fallback(handle_404)
         .layer(Extension(state));
@@ -78,6 +88,46 @@ async fn time_handler() -> Json<TimeResponse> {
     Json(TimeResponse {
         current_time: Local::now().format("%Y-%m-%d %H:%M:%S").to_string(),
     })
+}
+
+// Handler for the blog page
+async fn blog_handler(
+    Extension(state): Extension<Arc<AppState>>,
+) -> Html<String> {
+    let mut context = tera::Context::new();
+    context.insert("current_page", "blog");
+    
+    let rendered = state.templates
+        .render("blog.html", &context)
+        .expect("Failed to render template");
+    
+    Html(rendered)
+}
+
+// Handler for the posts API
+async fn posts_handler() -> Json<Vec<BlogPost>> {
+    let posts = vec![
+        BlogPost {
+            title: "Getting Started with Rust".to_string(),
+            date: "2024-03-20".to_string(),
+            author: "John Doe".to_string(),
+            excerpt: "Learn the basics of Rust programming language and why it's becoming increasingly popular for systems programming.".to_string(),
+        },
+        BlogPost {
+            title: "Building Web Applications with Axum".to_string(),
+            date: "2024-03-19".to_string(),
+            author: "Jane Smith".to_string(),
+            excerpt: "A comprehensive guide to building modern web applications using the Axum framework in Rust.".to_string(),
+        },
+        BlogPost {
+            title: "Async Programming in Rust".to_string(),
+            date: "2024-03-18".to_string(),
+            author: "Mike Johnson".to_string(),
+            excerpt: "Understanding async/await and how to write efficient asynchronous code in Rust.".to_string(),
+        },
+    ];
+    
+    Json(posts)
 }
 
 // Handler for 404 errors
