@@ -100,6 +100,7 @@ h1 {
     line-height: 1.2;
     background: linear-gradient(to right, var(--primary-color), #818cf8);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
