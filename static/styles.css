@@ -82,6 +82,12 @@ nav a:hover {
     background-color: rgba(96, 165, 250, 0.1);
 }
 
+nav a.active {
+    color: var(--primary-color);
+    background-color: rgba(96, 165, 250, 0.1);
+    font-weight: 600;
+}
+
 main {
     flex: 1;
     padding: 2rem 0;

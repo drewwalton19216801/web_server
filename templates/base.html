@@ -202,8 +202,8 @@
         <div class="nav-container">
             <a href="/" class="nav-brand">My Website</a>
             <div class="nav-links">
-                <a href="/">Home</a>
-                <a href="/about">About</a>
+                <a href="/" class="{% if current_page == 'home' %}active{% endif %}">Home</a>
+                <a href="/about" class="{% if current_page == 'about' %}active{% endif %}">About</a>
             </div>
         </div>
     </nav>

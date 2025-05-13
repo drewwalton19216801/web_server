@@ -49,7 +49,8 @@ async fn main() {
 async fn home_handler(
     Extension(state): Extension<Arc<AppState>>,
 ) -> Html<String> {
-    let context = tera::Context::new();
+    let mut context = tera::Context::new();
+    context.insert("current_page", "home");
     
     let rendered = state.templates
         .render("home.html", &context)
@@ -62,7 +63,8 @@ async fn home_handler(
 async fn about_handler(
     Extension(state): Extension<Arc<AppState>>,
 ) -> Html<String> {
-    let context = tera::Context::new();
+    let mut context = tera::Context::new();
+    context.insert("current_page", "about");
     
     let rendered = state.templates
         .render("about.html", &context)
@@ -82,7 +84,8 @@ async fn time_handler() -> Json<TimeResponse> {
 async fn handle_404(
     Extension(state): Extension<Arc<AppState>>,
 ) -> impl IntoResponse {
-    let context = tera::Context::new();
+    let mut context = tera::Context::new();
+    context.insert("current_page", "404");
     
     let rendered = state.templates
         .render("404.html", &context)
