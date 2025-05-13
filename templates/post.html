@@ -26,4 +26,85 @@
         <a href="/blog" class="back-to-blog">← Back to Blog</a>
     </div>
 </div>
+
+<div class="card comments-section">
+    <h2>Comments</h2>
+    <div id="comments-list" class="comments-list">
+        <p>Loading comments...</p>
+    </div>
+    
+    <form id="comment-form" class="comment-form">
+        <h3>Add a Comment</h3>
+        <div class="form-group">
+            <label for="author">Name:</label>
+            <input type="text" id="author" name="author" required>
+        </div>
+        <div class="form-group">
+            <label for="content">Comment:</label>
+            <textarea id="content" name="content" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="submit-button">Post Comment</button>
+    </form>
+</div>
+
+<script>
+    const postId = '{{ post.id }}';
+    const commentsList = document.getElementById('comments-list');
+    const commentForm = document.getElementById('comment-form');
+
+    async function loadComments() {
+        try {
+            const response = await fetch(`/api/posts/${postId}/comments`);
+            const comments = await response.json();
+            
+            if (comments.length === 0) {
+                commentsList.innerHTML = '<p>No comments yet. Be the first to comment!</p>';
+                return;
+            }
+
+            commentsList.innerHTML = comments.map(comment => `
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="comment-author">${comment.author}</span>
+                        <span class="comment-date">${new Date(comment.created_at).toLocaleString()}</span>
+                    </div>
+                    <div class="comment-content">${comment.content}</div>
+                </div>
+            `).join('');
+        } catch (error) {
+            console.error('Error loading comments:', error);
+            commentsList.innerHTML = '<p>Error loading comments. Please try again later.</p>';
+        }
+    }
+
+    commentForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const author = document.getElementById('author').value;
+        const content = document.getElementById('content').value;
+
+        try {
+            const response = await fetch(`/api/posts/${postId}/comments`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ author, content }),
+            });
+
+            if (response.ok) {
+                document.getElementById('content').value = '';
+                loadComments();
+            } else {
+                alert('Error posting comment. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error posting comment:', error);
+            alert('Error posting comment. Please try again.');
+        }
+    });
+
+    // Load comments when the page loads
+    loadComments();
+</script>
 {% endblock content %} 
