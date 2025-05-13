@@ -1,60 +1,59 @@
-# Rust Web Server
+# Rust Web Server with Axum
 
-A modern web server built with Rust using Axum framework, featuring dynamic routing, template rendering, and real-time updates.
+A modern web server built with Rust and the Axum framework, featuring dynamic content rendering, real-time updates, and a powerful search system.
 
 ## Features
 
-- 🚀 Built with Rust and Axum framework
-- 📝 Dynamic page rendering using Tera templates
-- 🎨 Modern, responsive UI with CSS
-- ⚡ Real-time updates using JavaScript
-- 🔄 API endpoint for current time
-- 📱 Mobile-friendly design
+- **Dynamic Page Rendering**: Server-side rendering using Tera templates
+- **Real-time Updates**: Live time display with JavaScript
+- **Blog System**: Complete blog functionality with posts, tags, and excerpts
+- **Advanced Search**:
+  - Real-time search as you type
+  - Search across multiple fields (title, content, tags)
+  - Modern mega menu interface
+  - Instant results with smooth animations
+  - Responsive design for all devices
+- **Modern UI/UX**:
+  - Clean, responsive design
+  - Dark mode by default
+  - Smooth animations and transitions
+  - Accessible navigation
+  - Mobile-friendly layout
 
 ## Project Structure
 
 ```
-web_server/
+.
 ├── src/
-│   └── main.rs          # Main application code
-├── templates/
-│   ├── base.html        # Base template with common layout
-│   ├── home.html        # Home page template
-│   ├── about.html       # About page template
-│   └── 404.html         # Error page template
+│   └── main.rs           # Main application code
 ├── static/
-│   └── styles.css       # Global styles
+│   └── styles.css        # Global styles
+├── templates/
+│   ├── base.html         # Base template
+│   ├── home.html         # Home page
+│   ├── about.html        # About page
+│   ├── blog.html         # Blog listing
+│   ├── post.html         # Individual post
+│   ├── 404.html          # Error page
+│   └── components/       # Reusable components
+│       └── search.html   # Search component
 └── Cargo.toml           # Project dependencies
 ```
 
-## Architecture
-
-The application uses a layered architecture:
-
-1. **Router Layer**: Handles HTTP routing using Axum
-2. **Template Layer**: Renders dynamic content using Tera templates
-3. **State Management**: Shared application state using Arc for thread safety
-4. **Static File Serving**: Serves static assets using tower-http
-
 ## Dependencies
 
-- `axum`: Web framework
-- `tokio`: Async runtime
-- `tera`: Template engine
-- `tower-http`: Static file serving
-- `serde`: Serialization/deserialization
-- `chrono`: Time handling
+- **axum**: Web framework
+- **tokio**: Async runtime
+- **tera**: Template engine
+- **tower-http**: HTTP utilities
+- **chrono**: Date and time handling
+- **serde**: Serialization/deserialization
 
-## Prerequisites
-
-- Rust (latest stable version)
-- Cargo (comes with Rust)
-
-## Running Locally
+## Getting Started
 
 1. Clone the repository:
    ```bash
-   git clone git@github.com:drewwalton19216801/web_server.git
+   git clone https://github.com/yourusername/web_server.git
    cd web_server
    ```
 
@@ -63,24 +62,39 @@ The application uses a layered architecture:
    cargo run
    ```
 
-3. Access the application:
-   - Main page: http://127.0.0.1:3000
-   - About page: http://127.0.0.1:3000/about
-   - Time API: http://127.0.0.1:3000/api/time
-
-## Development
-
-The server runs on port 3000 by default. The application uses:
-- Hot reloading for templates
-- Real-time updates for the current time
-- Responsive design for all screen sizes
+3. Visit `http://localhost:3000` in your browser
 
 ## API Endpoints
 
 - `GET /`: Home page
 - `GET /about`: About page
-- `GET /api/time`: Returns current time in JSON format
-- `GET /*`: 404 page for undefined routes
+- `GET /blog`: Blog listing
+- `GET /blog/{id}`: Individual blog post
+- `GET /api/time`: Current server time
+- `GET /api/posts`: List of all blog posts
+- `GET /api/search`: Search posts (query parameters: `q` for search term, `in` for search fields)
+
+## Search Features
+
+The search system provides a powerful way to find content across the blog:
+
+- **Real-time Search**: Results update as you type
+- **Field Filtering**: Search in specific fields:
+  - Title
+  - Content
+  - Tags
+- **Modern Interface**:
+  - Dropdown mega menu
+  - Smooth animations
+  - Responsive design
+  - Custom scrollbar
+  - Blur effects
+- **Result Display**:
+  - Post title with link
+  - Publication date
+  - Author information
+  - Content excerpt
+  - Related tags
 
 ## Contributing
 
@@ -92,4 +106,4 @@ The server runs on port 3000 by default. The application uses:
 
 ## License
 
-This project is open source and available under the MIT License. 
+This project is licensed under the MIT License - see the LICENSE file for details. 
