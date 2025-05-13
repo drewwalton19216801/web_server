@@ -13,20 +13,6 @@ use crate::{
     data::get_blog_posts,
 };
 
-// Handler for the home page
-pub async fn home_handler(
-    Extension(state): Extension<Arc<AppState>>,
-) -> Html<String> {
-    let mut context = tera::Context::new();
-    context.insert("current_page", "home");
-    
-    let rendered = state.templates
-        .render("home.html", &context)
-        .expect("Failed to render template");
-    
-    Html(rendered)
-}
-
 // Handler for the about page
 pub async fn about_handler(
     Extension(state): Extension<Arc<AppState>>,

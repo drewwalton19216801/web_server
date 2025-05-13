@@ -32,11 +32,10 @@ async fn main() {
 
     // Build our application with routes
     let app = Router::new()
-        .route("/", get(home_handler))
+        .route("/", get(blog_handler))
         .route("/about", get(about_handler))
-        .route("/blog", get(blog_handler))
-        .route("/blog/tag/{tag}", get(tag_handler))
         .route("/blog/{id}", get(post_handler))
+        .route("/blog/tag/{tag}", get(tag_handler))
         .route("/api/time", get(time_handler))
         .route("/api/posts", get(posts_handler))
         .route("/api/search", get(search_handler))
