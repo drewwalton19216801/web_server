@@ -187,6 +187,7 @@ async fn main() {
         .route("/about", get(about_handler))
         .route("/blog", get(blog_handler))
         .route("/blog/{id}", get(post_handler))
+        .route("/blog/tag/{tag}", get(tag_handler))
         .route("/api/time", get(time_handler))
         .route("/api/posts", get(posts_handler))
         .route("/api/search", get(search_handler))
@@ -306,6 +307,27 @@ async fn search_handler(Query(params): Query<SearchQuery>) -> Json<Vec<BlogPost>
         .collect();
     
     Json(results)
+}
+
+// Handler for tag-based post filtering
+async fn tag_handler(
+    Extension(state): Extension<Arc<AppState>>,
+    Path(tag): Path<String>,
+) -> impl IntoResponse {
+    let posts = get_blog_posts()
+        .into_iter()
+        .filter(|post| post.tags.contains(&tag))
+        .collect::<Vec<_>>();
+
+    let mut context = tera::Context::new();
+    context.insert("current_page", "blog");
+    context.insert("tag", &tag);
+    context.insert("posts", &posts);
+    
+    match state.templates.render("tag.html", &context) {
+        Ok(rendered) => Html(rendered).into_response(),
+        Err(_) => (StatusCode::INTERNAL_SERVER_ERROR, "Template error").into_response(),
+    }
 }
 
 // Handler for 404 errors

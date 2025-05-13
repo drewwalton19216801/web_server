@@ -33,7 +33,7 @@
                     <p>${post.excerpt}</p>
                     <div class="post-tags">
                         ${post.tags.map(tag => `
-                            <span class="tag">${tag}</span>
+                            <a href="/blog/tag/${tag}" class="tag">${tag}</a>
                         `).join('')}
                     </div>
                     <a href="/blog/${post.id}" class="read-more">Read More</a>
