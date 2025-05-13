@@ -179,7 +179,7 @@ async fn main() {
         .route("/", get(home_handler))
         .route("/about", get(about_handler))
         .route("/blog", get(blog_handler))
-        .route("/blog/:id", get(post_handler))
+        .route("/blog/{id}", get(post_handler))
         .route("/api/time", get(time_handler))
         .route("/api/posts", get(posts_handler))
         .nest_service("/static", ServeDir::new("static"))
