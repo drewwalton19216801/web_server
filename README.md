@@ -1,11 +1,10 @@
 # Rust Web Server with Axum
 
-A modern web server built with Rust and the Axum framework, featuring dynamic content rendering, real-time updates, and a powerful search system.
+A modern web server built with Rust and the Axum framework, featuring dynamic content rendering and a powerful search system.
 
 ## Features
 
 - **Dynamic Page Rendering**: Server-side rendering using Tera templates
-- **Real-time Updates**: Live time display with JavaScript
 - **Blog System**: Complete blog functionality with posts, tags, and excerpts
 - **Comment System**:
   - In-memory comment storage
@@ -103,11 +102,10 @@ The search system provides a powerful way to find content across the blog:
   - Custom scrollbar
   - Blur effects
 - **Result Display**:
-  - Post title with link
-  - Publication date
-  - Author information
-  - Content excerpt
-  - Related tags
+  - Clean, focused results showing only title and excerpt
+  - Optimized for quick scanning
+  - Smooth hover effects
+  - Stable positioning without flickering
 
 ## Comment System
 
