@@ -43,8 +43,17 @@ A modern web server built with Rust and the Axum framework, featuring dynamic co
 .
 ├── src/
 │   ├── main.rs           # Main application code
-│   ├── models.rs         # Data models
-│   ├── handlers.rs       # Request handlers
+│   ├── models/           # Data models
+│   │   ├── mod.rs        # Module exports and re-exports
+│   │   ├── posts.rs      # Blog post models
+│   │   ├── comments.rs   # Comment models
+│   │   ├── search.rs     # Search query models
+│   │   └── pagination.rs # Pagination models
+│   ├── handlers/         # Request handlers
+│   │   ├── api.rs        # API endpoints
+│   │   ├── errors.rs     # Error handling
+│   │   ├── pages.rs      # Page rendering
+│   │   └── mod.rs        # Module exports
 │   ├── state.rs          # Application state
 │   └── data.rs           # Sample data
 ├── static/
@@ -60,6 +69,42 @@ A modern web server built with Rust and the Axum framework, featuring dynamic co
 │       └── search.html   # Search component
 └── Cargo.toml           # Project dependencies
 ```
+
+## Code Organization
+
+The project follows a modular architecture for better maintainability and separation of concerns:
+
+### Handlers Module (`src/handlers/`)
+- **API Handlers** (`api.rs`): RESTful API endpoints for posts, search, comments, and time
+- **Error Handlers** (`errors.rs`): Centralized error handling and custom error pages
+- **Page Handlers** (`pages.rs`): Server-side rendered page endpoints
+- **Module Exports** (`mod.rs`): Public interface for the handlers module
+
+### Models Module (`src/models/`)
+The models are organized into logical modules for better maintainability:
+
+- **Posts** (`posts.rs`): 
+  - `BlogPost`: Core blog post structure with metadata and content
+- **Comments** (`comments.rs`):
+  - `Comment`: Comment structure with metadata
+  - `CommentRequest`: Request body for adding new comments
+- **Search** (`search.rs`):
+  - `SearchQuery`: Query parameters for search functionality
+- **Pagination** (`pagination.rs`):
+  - `PaginationParams`: Query parameters for pagination
+  - `PaginatedResponse`: Generic response wrapper for paginated data
+
+All models are re-exported through `mod.rs` for convenient access:
+```rust
+use crate::models::BlogPost;  // Direct access
+// or
+use crate::models::posts::BlogPost;  // Module-specific access
+```
+
+### Core Modules
+- **State** (`state.rs`): Application-wide state management
+- **Data** (`data.rs`): Sample data and data access functions
+- **Main** (`main.rs`): Application entry point and route configuration
 
 ## Dependencies
 
