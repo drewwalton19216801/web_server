@@ -352,6 +352,7 @@ li::before {
 /* Search styles */
 .search-container {
     width: 100%;
+    position: relative;
 }
 
 .search-form {
@@ -816,6 +817,7 @@ li::before {
     box-shadow: var(--shadow-sm);
     border: 1px solid var(--border-color);
     grid-area: sidebar;
+    order: -1; /* This ensures the search box appears first in the sidebar */
 }
 
 .posts-card {
@@ -830,6 +832,7 @@ li::before {
 /* Update search container styles */
 .search-container {
     width: 100%;
+    position: relative;
 }
 
 .search-results {
@@ -849,6 +852,9 @@ li::before {
 @media (max-width: 768px) {
     .blog-grid {
         grid-template-columns: 1fr;
+        grid-template-areas: 
+            "sidebar"
+            "main";
     }
 
     .search-card {
