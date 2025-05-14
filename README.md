@@ -1,11 +1,17 @@
 # Rust Web Server with Axum
 
-A modern web server built with Rust and the Axum framework, featuring dynamic content rendering and a powerful search system.
+A modern web server built with Rust and the Axum framework, featuring dynamic content rendering, pagination, and a powerful search system.
 
 ## Features
 
 - **Dynamic Page Rendering**: Server-side rendering using Tera templates
 - **Blog System**: Complete blog functionality with posts, tags, and excerpts
+- **Pagination Support**:
+  - Configurable results per page (3, 5, or 10 items)
+  - Dynamic page navigation
+  - Responsive pagination controls
+  - Smooth page transitions
+  - Total results and pages display
 - **Comment System**:
   - In-memory comment storage
   - Real-time comment updates
@@ -81,10 +87,34 @@ A modern web server built with Rust and the Axum framework, featuring dynamic co
 - `GET /blog`: Blog listing
 - `GET /blog/{id}`: Individual blog post
 - `GET /api/time`: Current server time
-- `GET /api/posts`: List of all blog posts
+- `GET /api/posts`: List of all blog posts (supports pagination)
 - `GET /api/search`: Search posts (query parameters: `q` for search term, `in` for search fields)
 - `GET /api/posts/{id}/comments`: Get comments for a post
 - `POST /api/posts/{id}/comments`: Add a comment to a post
+
+## Pagination Features
+
+The blog system now includes powerful pagination capabilities:
+
+- **Configurable Results**:
+  - Choose between 3, 5, or 10 items per page
+  - Dynamic page size adjustment
+  - Persistent page size selection
+- **Navigation Controls**:
+  - Previous/Next page buttons
+  - Page number indicators
+  - Current page highlighting
+  - Total pages display
+- **User Experience**:
+  - Smooth page transitions
+  - Maintains scroll position
+  - Responsive design
+  - Clear visual feedback
+- **Technical Implementation**:
+  - Server-side pagination
+  - Efficient data loading
+  - Optimized performance
+  - Clean URL structure
 
 ## Search Features
 
