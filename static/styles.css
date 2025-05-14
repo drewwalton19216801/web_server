@@ -796,15 +796,35 @@ li::before {
 
 /* Update existing blog layout to use new grid system */
 .blog-grid {
-    composes: grid grid-template-sidebar-right;
+    display: grid;
+    grid-template-columns: 2fr minmax(300px, 1fr);
+    grid-template-areas: "main sidebar";
+    gap: var(--grid-gap, 2rem);
+    width: 100%;
+    max-width: var(--grid-max-width, 1200px);
+    margin: 0 auto;
+    padding: 0 var(--grid-padding, 1rem);
 }
 
 .search-card {
-    composes: grid-item grid-item-sticky grid-area-sidebar;
+    position: sticky;
+    top: 5rem;
+    height: fit-content;
+    background: var(--card-bg);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    grid-area: sidebar;
 }
 
 .posts-card {
-    composes: grid-item grid-area-main;
+    background: var(--card-bg);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    grid-area: main;
 }
 
 /* Update search container styles */
