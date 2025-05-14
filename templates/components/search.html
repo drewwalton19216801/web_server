@@ -130,7 +130,7 @@
                     </div>
                     <p class="result-excerpt">${post.excerpt}</p>
                     <div class="result-tags">
-                        ${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        ${post.tags.map(tag => `<a href="/blog/tag/${encodeURIComponent(tag)}" class="tag">${tag}</a>`).join('')}
                     </div>
                 </article>
             `).join('');
