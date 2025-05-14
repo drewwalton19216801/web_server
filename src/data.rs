@@ -130,5 +130,213 @@ async fn main() {
             "#.to_string(),
             tags: vec!["rust".to_string(), "async".to_string(), "performance".to_string()],
         },
+        BlogPost {
+            id: "error-handling-in-rust".to_string(),
+            title: "Error Handling in Rust".to_string(),
+            date: "2024-03-17".to_string(),
+            author: "Sarah Wilson".to_string(),
+            excerpt: "A deep dive into Rust's error handling mechanisms and best practices.".to_string(),
+            content: r#"
+                <h2>Understanding Error Handling</h2>
+                <p>Rust's approach to error handling is unique and powerful, combining the Result type with pattern matching for robust error management.</p>
+
+                <h2>Key Concepts</h2>
+                <ul>
+                    <li>The Result type</li>
+                    <li>Error propagation with ?</li>
+                    <li>Custom error types</li>
+                    <li>Error conversion</li>
+                </ul>
+
+                <h2>Example Code</h2>
+                <pre><code>
+#[derive(Debug)]
+enum AppError {
+    IoError(std::io::Error),
+    ParseError(serde_json::Error),
+}
+
+impl From<std::io::Error> for AppError {
+    fn from(error: std::io::Error) -> Self {
+        AppError::IoError(error)
+    }
+}
+
+fn process_file() -> Result<String, AppError> {
+    let content = std::fs::read_to_string("data.json")?;
+    let data: Data = serde_json::from_str(&content)?;
+    Ok(data.to_string())
+}
+                </code></pre>
+
+                <h2>Best Practices</h2>
+                <p>When handling errors in Rust:</p>
+                <ul>
+                    <li>Use the Result type for recoverable errors</li>
+                    <li>Implement custom error types for your application</li>
+                    <li>Use the ? operator for error propagation</li>
+                    <li>Provide meaningful error messages</li>
+                </ul>
+
+                <h2>Conclusion</h2>
+                <p>Rust's error handling system encourages writing robust and maintainable code by making error cases explicit and forcing developers to handle them appropriately.</p>
+            "#.to_string(),
+            tags: vec!["rust".to_string(), "error-handling".to_string(), "best-practices".to_string()],
+        },
+        BlogPost {
+            id: "testing-in-rust".to_string(),
+            title: "Testing in Rust".to_string(),
+            date: "2024-03-16".to_string(),
+            author: "David Brown".to_string(),
+            excerpt: "Learn how to write effective tests in Rust using the built-in testing framework.".to_string(),
+            content: r#"
+                <h2>Rust's Testing Framework</h2>
+                <p>Rust comes with a powerful built-in testing framework that makes it easy to write and run tests for your code.</p>
+
+                <h2>Types of Tests</h2>
+                <ul>
+                    <li>Unit tests</li>
+                    <li>Integration tests</li>
+                    <li>Documentation tests</li>
+                    <li>Property-based tests</li>
+                </ul>
+
+                <h2>Example Code</h2>
+                <pre><code>
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_addition() {
+        assert_eq!(add(2, 2), 4);
+    }
+
+    #[test]
+    #[should_panic(expected = "divide by zero")]
+    fn test_division() {
+        divide(10, 0);
+    }
+}
+                </code></pre>
+
+                <h2>Best Practices</h2>
+                <p>When writing tests in Rust:</p>
+                <ul>
+                    <li>Write tests alongside your code</li>
+                    <li>Use descriptive test names</li>
+                    <li>Test both success and failure cases</li>
+                    <li>Keep tests focused and isolated</li>
+                </ul>
+
+                <h2>Conclusion</h2>
+                <p>Testing is a crucial part of software development, and Rust's testing framework makes it easy to write comprehensive tests for your code.</p>
+            "#.to_string(),
+            tags: vec!["rust".to_string(), "testing".to_string(), "best-practices".to_string()],
+        },
+        BlogPost {
+            id: "rust-memory-safety".to_string(),
+            title: "Understanding Rust's Memory Safety".to_string(),
+            date: "2024-03-15".to_string(),
+            author: "Emily Chen".to_string(),
+            excerpt: "A detailed exploration of how Rust ensures memory safety without garbage collection.".to_string(),
+            content: r#"
+                <h2>Memory Safety in Rust</h2>
+                <p>Rust's unique approach to memory safety combines ownership, borrowing, and lifetimes to prevent common memory-related bugs.</p>
+
+                <h2>Key Concepts</h2>
+                <ul>
+                    <li>Ownership rules</li>
+                    <li>Borrowing and references</li>
+                    <li>Lifetimes</li>
+                    <li>Smart pointers</li>
+                </ul>
+
+                <h2>Example Code</h2>
+                <pre><code>
+fn main() {
+    let s1 = String::from("hello");
+    let s2 = s1; // s1's ownership moves to s2
+    // println!("{}", s1); // This would cause a compile error
+    println!("{}", s2); // This works fine
+}
+
+fn process_string(s: &str) {
+    println!("Processing: {}", s);
+}
+                </code></pre>
+
+                <h2>Best Practices</h2>
+                <p>When working with memory in Rust:</p>
+                <ul>
+                    <li>Understand ownership rules</li>
+                    <li>Use references when appropriate</li>
+                    <li>Let the compiler guide you</li>
+                    <li>Use smart pointers for complex cases</li>
+                </ul>
+
+                <h2>Conclusion</h2>
+                <p>Rust's memory safety guarantees make it possible to write high-performance code without the overhead of garbage collection or the risks of manual memory management.</p>
+            "#.to_string(),
+            tags: vec!["rust".to_string(), "memory-safety".to_string(), "systems-programming".to_string()],
+        },
+        BlogPost {
+            id: "rust-concurrency".to_string(),
+            title: "Concurrency in Rust".to_string(),
+            date: "2024-03-14".to_string(),
+            author: "Alex Thompson".to_string(),
+            excerpt: "Exploring Rust's concurrency features and how to write safe concurrent code.".to_string(),
+            content: r#"
+                <h2>Concurrency in Rust</h2>
+                <p>Rust provides powerful tools for writing concurrent code while maintaining safety guarantees.</p>
+
+                <h2>Key Concepts</h2>
+                <ul>
+                    <li>Threads and thread safety</li>
+                    <li>Message passing</li>
+                    <li>Shared state concurrency</li>
+                    <li>Async/await</li>
+                </ul>
+
+                <h2>Example Code</h2>
+                <pre><code>
+use std::thread;
+use std::sync::{Arc, Mutex};
+
+fn main() {
+    let counter = Arc::new(Mutex::new(0));
+    let mut handles = vec![];
+
+    for _ in 0..10 {
+        let counter = Arc::clone(&counter);
+        let handle = thread::spawn(move || {
+            let mut num = counter.lock().unwrap();
+            *num += 1;
+        });
+        handles.push(handle);
+    }
+
+    for handle in handles {
+        handle.join().unwrap();
+    }
+
+    println!("Result: {}", *counter.lock().unwrap());
+}
+                </code></pre>
+
+                <h2>Best Practices</h2>
+                <p>When writing concurrent code in Rust:</p>
+                <ul>
+                    <li>Prefer message passing over shared state</li>
+                    <li>Use appropriate synchronization primitives</li>
+                    <li>Consider using async/await for I/O-bound tasks</li>
+                    <li>Test concurrent code thoroughly</li>
+                </ul>
+
+                <h2>Conclusion</h2>
+                <p>Rust's concurrency features make it possible to write safe and efficient concurrent code without the common pitfalls of other languages.</p>
+            "#.to_string(),
+            tags: vec!["rust".to_string(), "concurrency".to_string(), "performance".to_string()],
+        },
     ]
 } 

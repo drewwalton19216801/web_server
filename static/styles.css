@@ -733,4 +733,79 @@ li::before {
     display: block;
     opacity: 1;
     transform: translateY(0);
+}
+
+/* Pagination styles */
+.pagination-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: var(--card-bg);
+    border-radius: 0.5rem;
+    border: 1px solid var(--border-color);
+}
+
+.results-per-page {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.results-per-page label {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.per-page-select {
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.375rem;
+    background: var(--bg-color);
+    color: var(--text-color);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.per-page-select:hover {
+    border-color: var(--primary-color);
+}
+
+.pagination {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.pagination-controls {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.pagination-button {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.375rem;
+    background: var(--bg-color);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.pagination-button:hover {
+    border-color: var(--primary-color);
+    background: var(--primary-color);
+    color: var(--bg-color);
+}
+
+.pagination-current {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--primary-color);
+    border-radius: 0.375rem;
+    background: var(--primary-color);
+    color: var(--bg-color);
 } 

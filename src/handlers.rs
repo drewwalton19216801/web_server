@@ -8,12 +8,12 @@ use chrono::Utc;
 use uuid::Uuid;
 
 use crate::{
-    models::{BlogPost, SearchQuery, Comment, CommentRequest},
+    models::{BlogPost, SearchQuery, Comment, CommentRequest, PaginationParams, PaginatedResponse},
     state::AppState,
     data::get_blog_posts,
 };
 
-// Handler for the about page
+/// Handler for the about page
 pub async fn about_handler(
     Extension(state): Extension<Arc<AppState>>,
 ) -> Html<String> {
@@ -27,7 +27,7 @@ pub async fn about_handler(
     Html(rendered)
 }
 
-// Handler for the blog page
+/// Handler for the blog page
 pub async fn blog_handler(
     Extension(state): Extension<Arc<AppState>>,
 ) -> Html<String> {
@@ -41,7 +41,7 @@ pub async fn blog_handler(
     Html(rendered)
 }
 
-// Handler for individual blog posts
+/// Handler for individual blog posts
 pub async fn post_handler(
     Extension(state): Extension<Arc<AppState>>,
     Path(id): Path<String>,
@@ -61,12 +61,28 @@ pub async fn post_handler(
     }
 }
 
-// Handler for the posts API
-pub async fn posts_handler() -> Json<Vec<BlogPost>> {
-    Json(get_blog_posts())
+/// Handler for the posts API with pagination support
+pub async fn posts_handler(Query(params): Query<PaginationParams>) -> Json<PaginatedResponse<BlogPost>> {
+    let posts = get_blog_posts();
+    let total = posts.len();
+    let per_page = params.per_page.min(10).max(3); // Limit between 3 and 10
+    let page = params.page.max(1);
+    let total_pages = (total + per_page - 1) / per_page;
+    let page = page.min(total_pages);
+    
+    let start = (page - 1) * per_page;
+    let items = posts.into_iter().skip(start).take(per_page).collect();
+    
+    Json(PaginatedResponse {
+        items,
+        total,
+        page,
+        per_page,
+        total_pages,
+    })
 }
 
-// Handler for the search API
+/// Handler for the search API
 pub async fn search_handler(Query(params): Query<SearchQuery>) -> Json<Vec<BlogPost>> {
     let query = params.q.to_lowercase();
     let search_in: Vec<&str> = params.search_in.split(',').collect();
@@ -99,7 +115,7 @@ pub async fn search_handler(Query(params): Query<SearchQuery>) -> Json<Vec<BlogP
     Json(results)
 }
 
-// Handler for tag-based post filtering
+/// Handler for tag-based post filtering
 pub async fn tag_handler(
     Extension(state): Extension<Arc<AppState>>,
     Path(tag): Path<String>,
@@ -120,7 +136,7 @@ pub async fn tag_handler(
     }
 }
 
-// Handler for 404 errors
+/// Handler for 404 errors
 pub async fn handle_404(
     Extension(state): Extension<Arc<AppState>>,
 ) -> impl IntoResponse {
@@ -134,7 +150,7 @@ pub async fn handle_404(
     (StatusCode::NOT_FOUND, Html(rendered))
 }
 
-// Handler for getting comments for a post
+/// Handler for getting comments for a post
 pub async fn get_comments_handler(
     Extension(state): Extension<Arc<AppState>>,
     Path(post_id): Path<String>,
@@ -144,7 +160,7 @@ pub async fn get_comments_handler(
     Json(post_comments)
 }
 
-// Handler for adding a comment to a post
+/// Handler for adding a comment to a post
 pub async fn add_comment_handler(
     Extension(state): Extension<Arc<AppState>>,
     Path(post_id): Path<String>,
@@ -171,7 +187,7 @@ pub async fn add_comment_handler(
     (StatusCode::CREATED, Json(comment)).into_response()
 }
 
-// Handler for the time API
+/// Handler for the time API
 pub async fn time_handler() -> Json<String> {
     Json(Utc::now().to_rfc3339())
 } 

@@ -6,24 +6,41 @@
 
 <div class="card">
     <h1>Blog Posts</h1>
+    <div class="pagination-controls">
+        <div class="results-per-page">
+            <label for="per-page">Results per page:</label>
+            <select id="per-page" class="per-page-select">
+                <option value="3">3</option>
+                <option value="5" selected>5</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+    </div>
     <div id="blog-posts" class="blog-posts">
         <p>Loading posts...</p>
     </div>
+    <div id="pagination" class="pagination"></div>
 </div>
 
 <script>
+    let currentPage = 1;
+    let currentPerPage = 5;
+
     async function loadPosts() {
         try {
-            const response = await fetch('/api/posts');
-            const posts = await response.json();
+            const response = await fetch(`/api/posts?page=${currentPage}&per_page=${currentPerPage}`);
+            const data = await response.json();
             const postsContainer = document.getElementById('blog-posts');
+            const paginationContainer = document.getElementById('pagination');
             
-            if (posts.length === 0) {
+            if (data.items.length === 0) {
                 postsContainer.innerHTML = '<p>No posts available.</p>';
+                paginationContainer.innerHTML = '';
                 return;
             }
 
-            postsContainer.innerHTML = posts.map(post => `
+            // Render posts
+            postsContainer.innerHTML = data.items.map(post => `
                 <article class="blog-post">
                     <h2>${post.title}</h2>
                     <div class="post-meta">
@@ -39,12 +56,64 @@
                     <a href="/blog/${post.id}" class="read-more">Read More</a>
                 </article>
             `).join('');
+
+            // Render pagination
+            let paginationHtml = '<div class="pagination-controls">';
+            
+            // Previous page button
+            if (data.page > 1) {
+                paginationHtml += `
+                    <button class="pagination-button" onclick="changePage(${data.page - 1})">
+                        Previous
+                    </button>
+                `;
+            }
+
+            // Page numbers
+            for (let i = 1; i <= data.total_pages; i++) {
+                if (i === data.page) {
+                    paginationHtml += `
+                        <span class="pagination-current">${i}</span>
+                    `;
+                } else {
+                    paginationHtml += `
+                        <button class="pagination-button" onclick="changePage(${i})">
+                            ${i}
+                        </button>
+                    `;
+                }
+            }
+
+            // Next page button
+            if (data.page < data.total_pages) {
+                paginationHtml += `
+                    <button class="pagination-button" onclick="changePage(${data.page + 1})">
+                        Next
+                    </button>
+                `;
+            }
+
+            paginationHtml += '</div>';
+            paginationContainer.innerHTML = paginationHtml;
+
         } catch (error) {
             console.error('Error loading posts:', error);
             document.getElementById('blog-posts').innerHTML = 
                 '<p>Error loading posts. Please try again later.</p>';
         }
     }
+
+    function changePage(page) {
+        currentPage = page;
+        loadPosts();
+    }
+
+    // Handle per page changes
+    document.getElementById('per-page').addEventListener('change', (e) => {
+        currentPerPage = parseInt(e.target.value);
+        currentPage = 1; // Reset to first page when changing per page
+        loadPosts();
+    });
 
     // Load posts when the page loads
     loadPosts();
