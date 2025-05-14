@@ -690,15 +690,16 @@ li::before {
 /* Search dropdown styles */
 .search-dropdown {
     position: relative;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
 }
 
 .search-toggle {
     background: none;
     border: none;
     color: var(--text-color);
-    padding: 0.5rem;
     cursor: pointer;
+    padding: 0.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
