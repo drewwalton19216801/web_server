@@ -351,8 +351,7 @@ li::before {
 
 /* Search styles */
 .search-container {
-    margin-bottom: 2rem;
-    position: relative;
+    width: 100%;
 }
 
 .search-form {
@@ -441,24 +440,16 @@ li::before {
 }
 
 .search-results {
-    margin-top: 1rem;
     position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: var(--nav-bg);
-    border-radius: 0.5rem;
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-md);
-    z-index: 1000;
-    max-height: 80vh;
-    overflow-y: auto;
-    backdrop-filter: blur(8px);
-    background-color: var(--nav-blur-bg);
-    animation: slideDown 0.2s ease-out;
-    transform-origin: top center;
-    will-change: transform, opacity;
     width: 100%;
+    max-height: 500px;
+    overflow-y: auto;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    margin-top: 0.5rem;
+    box-shadow: var(--shadow-md);
+    z-index: 10;
 }
 
 /* Remove the wrapper since we're using absolute positioning */
@@ -703,4 +694,150 @@ li::before {
 
 .submit-button:active {
     transform: translateY(0);
+}
+
+/* Grid System */
+.grid {
+    display: grid;
+    gap: var(--grid-gap, 2rem);
+    width: 100%;
+    max-width: var(--grid-max-width, 1200px);
+    margin: 0 auto;
+    padding: 0 var(--grid-padding, 1rem);
+}
+
+/* Grid Templates */
+.grid-template-default {
+    grid-template-columns: repeat(12, 1fr);
+}
+
+.grid-template-sidebar-right {
+    grid-template-columns: 2fr minmax(300px, 1fr);
+    grid-template-areas: 
+        "main sidebar";
+}
+
+.grid-template-sidebar-left {
+    grid-template-columns: minmax(300px, 1fr) 2fr;
+    grid-template-areas: 
+        "sidebar main";
+}
+
+.grid-template-three-column {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas: 
+        "col1 col2 col3";
+}
+
+/* Grid Areas */
+.grid-area-main {
+    grid-area: main;
+}
+
+.grid-area-sidebar {
+    grid-area: sidebar;
+}
+
+.grid-area-col1 { grid-area: col1; }
+.grid-area-col2 { grid-area: col2; }
+.grid-area-col3 { grid-area: col3; }
+
+/* Grid Items */
+.grid-item {
+    background: var(--card-bg);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+}
+
+.grid-item-sticky {
+    position: sticky;
+    top: 5rem;
+    height: fit-content;
+}
+
+/* Responsive Grid */
+@media (max-width: 1024px) {
+    .grid-template-three-column {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-areas: 
+            "col1 col2"
+            "col3 col3";
+    }
+}
+
+@media (max-width: 768px) {
+    .grid {
+        --grid-gap: 1.5rem;
+    }
+
+    .grid-template-sidebar-right,
+    .grid-template-sidebar-left {
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "sidebar"
+            "main";
+    }
+
+    .grid-template-three-column {
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "col1"
+            "col2"
+            "col3";
+    }
+
+    .grid-item-sticky {
+        position: relative;
+        top: 0;
+    }
+}
+
+/* Update existing blog layout to use new grid system */
+.blog-grid {
+    composes: grid grid-template-sidebar-right;
+}
+
+.search-card {
+    composes: grid-item grid-item-sticky grid-area-sidebar;
+}
+
+.posts-card {
+    composes: grid-item grid-area-main;
+}
+
+/* Update search container styles */
+.search-container {
+    width: 100%;
+}
+
+.search-results {
+    position: absolute;
+    width: 100%;
+    max-height: 500px;
+    overflow-y: auto;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    margin-top: 0.5rem;
+    box-shadow: var(--shadow-md);
+    z-index: 10;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .blog-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .search-card {
+        position: relative;
+        top: 0;
+        grid-column: 1;
+    }
+
+    .posts-card {
+        grid-column: 1;
+    }
 } 
