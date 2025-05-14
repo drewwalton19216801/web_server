@@ -29,6 +29,7 @@
     const searchInput = document.getElementById('search-input');
     const searchResults = document.getElementById('search-results');
     let searchTimeout;
+    let isMouseOverResults = false;
 
     searchForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -38,6 +39,24 @@
     searchInput.addEventListener('input', () => {
         clearTimeout(searchTimeout);
         searchTimeout = setTimeout(performSearch, 300);
+    });
+
+    // Add mouse event listeners to prevent flickering
+    searchResults.addEventListener('mouseenter', () => {
+        isMouseOverResults = true;
+    });
+
+    searchResults.addEventListener('mouseleave', () => {
+        isMouseOverResults = false;
+    });
+
+    searchInput.addEventListener('blur', () => {
+        // Only hide results if mouse is not over them
+        setTimeout(() => {
+            if (!isMouseOverResults) {
+                searchResults.innerHTML = '';
+            }
+        }, 200);
     });
 
     async function performSearch() {
