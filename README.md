@@ -6,6 +6,12 @@ A modern web server built with Rust and the Axum framework, featuring dynamic co
 
 - **Dynamic Page Rendering**: Server-side rendering using Tera templates
 - **Blog System**: Complete blog functionality with posts, tags, and excerpts
+- **Error Handling**:
+  - Consistent error page styling
+  - Custom error messages for different scenarios
+  - HTTP status code display
+  - User-friendly error descriptions
+  - Easy navigation back to home
 - **Pagination Support**:
   - Configurable results per page (3, 5, or 10 items)
   - Dynamic page navigation
@@ -49,7 +55,7 @@ A modern web server built with Rust and the Axum framework, featuring dynamic co
 │   ├── about.html        # About page
 │   ├── blog.html         # Blog listing
 │   ├── post.html         # Individual post
-│   ├── 404.html          # Error page
+│   ├── error.html        # Generic error page
 │   └── components/       # Reusable components
 │       └── search.html   # Search component
 └── Cargo.toml           # Project dependencies
@@ -153,6 +159,27 @@ The comment system allows visitors to interact with blog posts:
   - Asynchronous comment loading
   - Modern UI with animations
   - Error handling
+
+## Error Handling
+
+The application implements a robust error handling system:
+
+- **Generic Error Page**:
+  - Consistent styling across all error types
+  - Clear error code display
+  - Descriptive error messages
+  - Easy navigation back to home
+  - Maintains site branding
+- **Error Types**:
+  - 404 Not Found (missing pages/posts)
+  - 500 Internal Server Error
+  - Custom error messages for specific scenarios
+- **Implementation**:
+  - Centralized error rendering
+  - Type-safe error handling
+  - Proper HTTP status codes
+  - User-friendly messages
+  - Maintainable error system
 
 ## Contributing
 
