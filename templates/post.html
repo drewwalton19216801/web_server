@@ -3,8 +3,8 @@
 {% block title %}{{ post.title }} - My Website{% endblock title %}
 
 {% block content %}
-<div class="grid grid-template-default">
-    <div class="grid-item" style="grid-column: 2 / span 10;">
+<div class="grid grid-template-sidebar-right">
+    <div class="grid-item grid-area-main">
         <div class="blog-post-full">
             <div class="post-header">
                 <h1>{{ post.title }}</h1>
@@ -45,6 +45,10 @@
                 <button type="submit" class="submit-button">Post Comment</button>
             </form>
         </div>
+    </div>
+
+    <div class="grid-item grid-item-sticky grid-area-sidebar">
+        {% include "components/search.html" %}
     </div>
 </div>
 
