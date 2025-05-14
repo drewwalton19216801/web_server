@@ -28,8 +28,44 @@
     const searchForm = document.getElementById('search-form');
     const searchInput = document.getElementById('search-input');
     const searchResults = document.getElementById('search-results');
+    const searchDropdown = document.querySelector('.search-dropdown');
+    const searchToggle = document.querySelector('.search-toggle');
     let searchTimeout;
     let isMouseOverResults = false;
+
+    // Toggle dropdown
+    searchToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        searchDropdown.classList.toggle('active');
+        if (searchDropdown.classList.contains('active')) {
+            // Focus input after a small delay to ensure the dropdown is visible
+            setTimeout(() => {
+                searchInput.focus();
+            }, 100);
+        } else {
+            // Clear results when closing
+            searchResults.innerHTML = '';
+            searchInput.value = '';
+        }
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!searchDropdown.contains(e.target)) {
+            searchDropdown.classList.remove('active');
+            searchResults.innerHTML = '';
+            searchInput.value = '';
+        }
+    });
+
+    // Handle escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && searchDropdown.classList.contains('active')) {
+            searchDropdown.classList.remove('active');
+            searchResults.innerHTML = '';
+            searchInput.value = '';
+        }
+    });
 
     searchForm.addEventListener('submit', (e) => {
         e.preventDefault();

@@ -351,35 +351,35 @@ li::before {
 
 /* Search styles */
 .search-container {
-    margin-bottom: 2rem;
-    position: relative;
+    margin-bottom: 0;
 }
 
 .search-form {
     background: var(--nav-bg);
-    padding: 1.5rem;
+    padding: 1rem;
     border-radius: 0.5rem;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-md);
     position: relative;
     z-index: 10;
+    backdrop-filter: blur(8px);
+    background-color: var(--nav-blur-bg);
 }
 
 .search-input-group {
     display: flex;
     gap: 0.5rem;
-    margin-bottom: 1rem;
-    position: relative;
+    margin-bottom: 0.5rem;
 }
 
 .search-input {
     flex: 1;
-    padding: 1rem 1.25rem;
+    padding: 0.75rem 1rem;
     border: 2px solid var(--border-color);
     border-radius: 0.5rem;
     background: var(--bg-color);
     color: var(--text-color);
-    font-size: 1.1rem;
+    font-size: 1rem;
     transition: var(--transition);
 }
 
@@ -390,75 +390,24 @@ li::before {
 }
 
 .search-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    background: var(--primary-color);
-    border: none;
-    border-radius: 0.5rem;
-    color: var(--bg-color);
-    cursor: pointer;
-    transition: var(--transition);
-    min-width: 3.5rem;
-}
-
-.search-button:hover {
-    background: var(--primary-hover);
-    transform: translateY(-1px);
+    padding: 0.75rem;
+    min-width: 3rem;
 }
 
 .search-filters {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
+    gap: 1rem;
     padding: 0.5rem 0;
-    border-top: 1px solid var(--border-color);
-    margin-top: 1rem;
+    margin-top: 0.5rem;
 }
 
 .search-filter {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--text-light);
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 0.375rem;
-    transition: var(--transition);
-}
-
-.search-filter:hover {
-    background: rgba(96, 165, 250, 0.1);
-    color: var(--primary-color);
-}
-
-.search-filter input[type="checkbox"] {
-    width: 1.1rem;
-    height: 1.1rem;
-    cursor: pointer;
-    accent-color: var(--primary-color);
+    font-size: 0.9rem;
+    padding: 0.25rem 0.5rem;
 }
 
 .search-results {
-    margin-top: 1rem;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: var(--nav-bg);
-    border-radius: 0.5rem;
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-md);
-    z-index: 1000;
-    max-height: 80vh;
-    overflow-y: auto;
-    backdrop-filter: blur(8px);
-    background-color: var(--nav-blur-bg);
-    animation: slideDown 0.2s ease-out;
-    transform-origin: top center;
-    will-change: transform, opacity;
-    width: 100%;
+    margin-top: 0.5rem;
+    max-height: 60vh;
 }
 
 /* Remove the wrapper since we're using absolute positioning */
@@ -581,6 +530,22 @@ li::before {
     .search-button {
         padding: 0.875rem;
     }
+
+    .search-dropdown-content {
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 100%;
+        min-width: 100%;
+        margin-top: 0;
+        border-radius: 0;
+    }
+
+    .search-form {
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+    }
 }
 
 /* Comments section styles */
@@ -702,5 +667,48 @@ li::before {
 }
 
 .submit-button:active {
+    transform: translateY(0);
+}
+
+/* Search dropdown styles */
+.search-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.search-toggle {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    padding: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.375rem;
+    transition: var(--transition);
+}
+
+.search-toggle:hover {
+    color: var(--primary-color);
+    background-color: rgba(96, 165, 250, 0.1);
+}
+
+.search-dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    min-width: 400px;
+    margin-top: 0.5rem;
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+}
+
+.search-dropdown.active .search-dropdown-content {
+    display: block;
+    opacity: 1;
     transform: translateY(0);
 } 
