@@ -98,10 +98,12 @@
     async function performSearch() {
         const query = searchInput.value.trim();
         if (query.length < 2) {
+            searchResults.style.display = 'none';
             searchResults.innerHTML = '';
             return;
         }
 
+        searchResults.style.display = 'block';
         const searchIn = Array.from(document.querySelectorAll('input[name="search-in"]:checked'))
             .map(input => input.value);
 
@@ -132,4 +134,33 @@
             searchResults.innerHTML = '<p class="search-error">Error performing search. Please try again.</p>';
         }
     }
-</script> 
+</script>
+
+<style>
+.search-container {
+    position: relative;
+    width: 100%;
+}
+
+.search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 1000;
+    display: none;
+}
+
+.search-result {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    word-wrap: break-word;
+}
+</style> 
