@@ -1,7 +1,8 @@
 use serde::Deserialize;
+use serde::Serialize;
 
 /// Query parameters for search functionality
-#[derive(Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct SearchQuery {
     pub q: String,
     #[serde(default, rename = "in")]

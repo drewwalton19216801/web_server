@@ -2,6 +2,8 @@ mod models;
 mod state;
 mod data;
 mod handlers;
+#[cfg(test)]
+mod tests;
 
 use axum::{
     routing::{get, post},

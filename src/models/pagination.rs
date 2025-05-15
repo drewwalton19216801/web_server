@@ -1,7 +1,7 @@
 use serde::{Serialize, Deserialize};
 
 /// Query parameters for pagination
-#[derive(Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct PaginationParams {
     #[serde(default = "default_page")]
     pub page: usize,
@@ -10,7 +10,7 @@ pub struct PaginationParams {
 }
 
 /// Response wrapper for paginated data
-#[derive(Serialize)]
+#[derive(Serialize, Deserialize)]
 pub struct PaginatedResponse<T> {
     pub items: Vec<T>,
     pub total: usize,

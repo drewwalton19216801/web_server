@@ -12,7 +12,7 @@ pub struct Comment {
 }
 
 /// Request body for adding a new comment
-#[derive(Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct CommentRequest {
     pub author: String,
     pub content: String,
