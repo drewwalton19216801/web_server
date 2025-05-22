@@ -6,6 +6,7 @@ use axum::{
 use std::sync::Arc;
 use chrono::Utc;
 use uuid::Uuid;
+use serde_json::json;
 
 use crate::{
     models::{BlogPost, SearchQuery, Comment, CommentRequest, PaginationParams, PaginatedResponse},
@@ -107,4 +108,15 @@ pub async fn add_comment_handler(
 /// Handler for the time API
 pub async fn time_handler() -> Json<String> {
     Json(Utc::now().to_rfc3339())
+}
+
+/// Handler for health check API
+pub async fn health_check_handler() -> Json<serde_json::Value> {
+    Json(json!({
+        "status": "healthy",
+        "timestamp": Utc::now().to_rfc3339(),
+        "service": "rust-web-server",
+        "version": "1.0.0",
+        "uptime": "running"
+    }))
 } 
